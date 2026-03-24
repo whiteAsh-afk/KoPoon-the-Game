@@ -24,19 +24,28 @@ def clear():
 
 # player's action
 def player_turn():
-    action = input("What will KoPoon do?\n"
-                   "1. Attack\n"
-                   "2. Heal\n"
-                   "3. Wait\n")
-    if action == "1":
-        enemy["hp"] -= player["dmg"]
-        print(f"KoPoon attack the enemy!\nDamage: {player['dmg']}")
-    elif action == "2":
-        player["hp"] += 10
-        print("KoPoon heal a bit.")
-    elif action == "3":
-        print("KoPoon wait and do no action.")
-        
+    while True:
+        action = input("What will KoPoon do?\n"
+                       "1. Attack\n"
+                       "2. Heal\n"
+                       "3. Wait\n")
+        if action == "1":
+            enemy["hp"] -= player["dmg"]
+            print(f"KoPoon attack the enemy!\nDamage: {player['dmg']}")
+            break
+        elif action == "2":
+            player["hp"] += 10
+            print("KoPoon heal a bit.")
+            break
+        elif action == "3":
+            print("KoPoon wait and do no action.")
+            break
+        else:
+            print("Invalid input")
+            time.sleep(2)
+            clear()
+            battle_screen()
+
 # enemy's action
 def enemy_turn():
     player["hp"] -= enemy["dmg"]
@@ -56,8 +65,10 @@ while game_running:
     if is_dead(enemy):
         print("The enemy is defeated!")
         game_running = False
+        break
     enemy_turn()
     time.sleep(2)
     if is_dead(player):
         print("KoPoon is dead!")
         game_running = False
+        break
