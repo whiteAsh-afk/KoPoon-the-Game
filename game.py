@@ -47,13 +47,17 @@ def is_dead(character):
     return character["hp"] <= 0
 
 #init the gameplay
-while not is_dead(player):
+game_running = True
+while game_running:
     clear()
     battle_screen()
     player_turn()
     time.sleep(2)
-    enemy_turn()
-    time.sleep(2)
     if is_dead(enemy):
         print("The enemy is defeated!")
-        break
+        game_running = False
+    enemy_turn()
+    time.sleep(2)
+    if is_dead(player):
+        print("KoPoon is dead!")
+        game_running = False
