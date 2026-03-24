@@ -15,8 +15,13 @@ enemy = {
 
 # print the battle screen
 def battle_screen():
+    os.system("cls" if os.name == "nt" else "clear")
     print(f"KoPoon HP: {player['hp']}")
     print(f"enemy HP: {enemy['hp']}")
+    print("What will KoPoon do?")
+    print("1. Attack")
+    print("2. Heal")
+    print("3. Wait")
 
 # clear the battle screen
 def clear():
@@ -25,10 +30,7 @@ def clear():
 # player's action
 def player_turn():
     while True:
-        action = input("What will KoPoon do?\n"
-                       "1. Attack\n"
-                       "2. Heal\n"
-                       "3. Wait\n")
+        action = input("> ")
         if action == "1":
             enemy["hp"] -= player["dmg"]
             print(f"KoPoon attack the enemy!\nDamage: {player['dmg']}")
@@ -43,7 +45,6 @@ def player_turn():
         else:
             print("Invalid input")
             time.sleep(2)
-            clear()
             battle_screen()
 
 # enemy's action
@@ -58,7 +59,6 @@ def is_dead(character):
 #init the gameplay
 game_running = True
 while game_running:
-    clear()
     battle_screen()
     player_turn()
     time.sleep(2)
