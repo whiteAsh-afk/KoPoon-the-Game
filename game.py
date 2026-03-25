@@ -1,5 +1,6 @@
 import os
 import time
+import random
 
 # define player stats
 player = {
@@ -7,17 +8,30 @@ player = {
         "dmg" : 20
         }
 
-# define enemy stats
-enemy = {
-        "hp" : 70,
-        "dmg" : 15
-        }
+# Enemy class
+class Enemy:
+    def __init__(self, name, hp, power, exp):
+        self.name = name
+        self.hp = hp
+        self.max_hp = hp
+        self.power = power
+        self.exp = exp
+    
+    def reset(self):
+        self.hp = self.max_hp
+
+enemy_list = [
+        Enemy("Slime", 20, 5, 5),
+        Enemy("Goblin", 35, 10, 10),
+        Enemy("Wolf", 50, 15, 20)
+        ]
 
 # print the battle screen
 def battle_screen():
     os.system("cls" if os.name == "nt" else "clear")
     print(f"KoPoon HP: {player['hp']}")
-    print(f"enemy HP: {enemy['hp']}")
+    print(f"enemy: {enemy.name}")
+    print(f"enemy HP: {enemy.hp}")
     print("What will KoPoon do?")
     print("1. Attack")
     print("2. Heal")
@@ -32,7 +46,7 @@ def player_turn():
     while True:
         action = input("> ")
         if action == "1":
-            enemy["hp"] -= player["dmg"]
+            enemy.hp -= player["dmg"]
             print(f"KoPoon attack the enemy!\nDamage: {player['dmg']}")
             break
         elif action == "2":
@@ -49,8 +63,8 @@ def player_turn():
 
 # enemy's action
 def enemy_turn():
-    player["hp"] -= enemy["dmg"]
-    print(f"The enemy attack!\nDamage: {enemy['dmg']}")
+    player["hp"] -= enemy.power
+    print(f"The enemy attack!\nDamage: {enemy.power}")
 
 # enemy hp checker
 def is_dead(character):
@@ -58,14 +72,17 @@ def is_dead(character):
 
 #init the gameplay
 game_running = True
+enemy = random.choice(enemy_list)
 while game_running:
     battle_screen()
     player_turn()
     time.sleep(2)
-    if is_dead(enemy):
-        print("The enemy is defeated!")
-        game_running = False
-        break
+    if enemy.hp <= 0:
+        print(f"{enemy.name} is defeated!")
+        time.sleep(2)
+        enemy = random.choice(enemy_list)
+        enemy.reset()
+        continue
     enemy_turn()
     time.sleep(2)
     if is_dead(player):
