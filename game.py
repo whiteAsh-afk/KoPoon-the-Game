@@ -26,9 +26,27 @@ enemy_list = [
         Enemy("Wolf", 50, 15, 20)
         ]
 
+# map_generator
+def generate_map(row, column):
+    map = []
+    for i in range(row):
+        tiles = []
+        for i in range(column):
+           tiles.append(".")
+        map.append(tiles)
+    return map
+
+#print the map
+def draw_map(map):
+    for row in map:
+        for tiles in row:
+            print(f"[{tiles}]", end="")
+        print()
+
 # print the battle screen
 def battle_screen():
     os.system("cls" if os.name == "nt" else "clear")
+    draw_map(generate_map(5, 5))
     print(f"KoPoon HP: {player['hp']}")
     print(f"enemy: {enemy.name}")
     print(f"enemy HP: {enemy.hp}")
