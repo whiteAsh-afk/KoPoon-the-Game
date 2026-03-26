@@ -14,3 +14,9 @@ class Player:
 
         self.x = new_x
         self.y = new_y
+
+    def take_damage(self, damage):
+        self.hp -= damage
+
+    def is_alive(self):
+        return self.hp > 0

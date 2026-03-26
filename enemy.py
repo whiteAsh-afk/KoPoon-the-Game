@@ -3,15 +3,21 @@ import random
 
 # Enemy class
 class Enemy:
-    def __init__(self, name, hp, power, exp):
+    def __init__(self, name, hp, attack, exp):
         self.name = name
         self.hp = hp
         self.max_hp = hp
-        self.power = power
+        self.attack = attack
         self.exp = exp
 
     def reset(self):
         self.hp = self.max_hp
+
+    def take_damage(self, damage):
+        self.hp -= damage
+
+    def is_alive(self):
+        return self.hp > 0
 
 
 enemy_list = [
