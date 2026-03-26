@@ -1,47 +1,11 @@
 import os
 import time
-import random
+from map import generate_map, draw_map
+from enemy import random_enemy
 
 # define player stats
-player = {
-        "hp" : 100,
-        "dmg" : 20
-        }
+player = {"hp": 100, "dmg": 20}
 
-# Enemy class
-class Enemy:
-    def __init__(self, name, hp, power, exp):
-        self.name = name
-        self.hp = hp
-        self.max_hp = hp
-        self.power = power
-        self.exp = exp
-    
-    def reset(self):
-        self.hp = self.max_hp
-
-enemy_list = [
-        Enemy("Slime", 20, 5, 5),
-        Enemy("Goblin", 35, 10, 10),
-        Enemy("Wolf", 50, 15, 20)
-        ]
-
-# map_generator
-def generate_map(row, column):
-    map = []
-    for i in range(row):
-        tiles = []
-        for i in range(column):
-           tiles.append(".")
-        map.append(tiles)
-    return map
-
-#print the map
-def draw_map(map):
-    for row in map:
-        for tiles in row:
-            print(f"[{tiles}]", end="")
-        print()
 
 # print the battle screen
 def battle_screen():
@@ -55,9 +19,11 @@ def battle_screen():
     print("2. Heal")
     print("3. Wait")
 
+
 # clear the battle screen
 def clear():
     os.system("cls" if os.name == "nt" else "clear")
+
 
 # player's action
 def player_turn():
@@ -79,18 +45,21 @@ def player_turn():
             time.sleep(2)
             battle_screen()
 
+
 # enemy's action
 def enemy_turn():
     player["hp"] -= enemy.power
     print(f"The enemy attack!\nDamage: {enemy.power}")
 
+
 # enemy hp checker
 def is_dead(character):
     return character["hp"] <= 0
 
-#init the gameplay
+
+# init the gameplay
 game_running = True
-enemy = random.choice(enemy_list)
+enemy = random_enemy()
 while game_running:
     battle_screen()
     player_turn()
@@ -98,7 +67,7 @@ while game_running:
     if enemy.hp <= 0:
         print(f"{enemy.name} is defeated!")
         time.sleep(2)
-        enemy = random.choice(enemy_list)
+        enemy = random_enemy()
         enemy.reset()
         continue
     enemy_turn()
