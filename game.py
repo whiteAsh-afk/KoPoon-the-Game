@@ -2,11 +2,12 @@ import os
 import time
 from map import generate_map, draw_map
 from enemy import random_enemy
+from player import Player
 
-# define player stats
-player = {"hp": 100, "dmg": 20}
+player = Player()
 
 
+# print the battle screen
 # print the battle screen
 def battle_screen():
     os.system("cls" if os.name == "nt" else "clear")
