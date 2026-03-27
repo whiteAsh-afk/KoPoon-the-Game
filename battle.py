@@ -1,4 +1,4 @@
-from helpers import clear, wait
+from helpers import draw_text, clear, wait
 import random
 
 

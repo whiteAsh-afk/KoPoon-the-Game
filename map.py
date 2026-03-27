@@ -1,4 +1,5 @@
-from helpers import clear
+import pygame
+from helpers import draw_text
 
 
 # map_generator
@@ -16,12 +17,10 @@ def generate_map(row, column):
 
 
 # print the map
-def draw_map(map, player):
-    clear()
+def draw_map(map, player, screen):
     for y, row in enumerate(map):
         for x, tile in enumerate(row):
             if x == player.x and y == player.y:
-                print("[P]", end="")
+                draw_text(screen, "P", x * 32, y * 32)
             else:
-                print(f"[{tile}]", end="")
-        print("")
+                draw_text(screen, tile, x * 32, y * 32)
