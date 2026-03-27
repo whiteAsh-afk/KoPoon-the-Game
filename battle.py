@@ -5,7 +5,7 @@ import random
 def battle(player, enemy):
     print(f"A wild {enemy.name} appear!!")
 
-    while player.is_alive and enemy.is_alive:
+    while player.is_alive() and enemy.is_alive():
         clear()
         print("=====BATTLE=====")
 

@@ -9,7 +9,7 @@ class Player:
         new_x = self.x + dx
         new_y = self.y + dy
 
-        if map[new_x][new_y] == "#":
+        if map[new_y][new_x] == "#":
             return
 
         self.x = new_x
