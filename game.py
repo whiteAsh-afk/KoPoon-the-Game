@@ -1,29 +1,70 @@
 import random
+import curses
+
 from enemy import random_enemy
-from battle import battle
 from player import Player
-from map import generate_map, draw_map
+from map import generate_map
+from battle import battle
 
 player = Player()
-
 game_map = generate_map(10, 10)
 
-while True:
-    draw_map(game_map, player)
 
-    key = input("Move (WASD): ")
+def draw_map(stdscr, game_map, player):
+    stdscr.clear()
 
-    if key == "w":
-        player.move(0, -1, game_map)
-    elif key == "s":
-        player.move(0, 1, game_map)
-    elif key == "a":
-        player.move(-1, 0, game_map)
-    elif key == "d":
-        player.move(1, 0, game_map)
-    else:
-        print("Invalid input")
+    for y, row in enumerate(game_map):
+        for x, tile in enumerate(row):
+            if x == player.x and y == player.y:
+                stdscr.addstr(y, x * 3, "[P]")
+            else:
+                stdscr.addstr(y, x * 3, f"[{tile}]")
 
-    if random.random() < 0.2:
-        enemy = random_enemy()
-        battle(player, enemy)
+    stdscr.refresh()
+
+
+def main(stdscr):
+    curses.curs_set(0)
+    stdscr.keypad(True)
+
+    while player.is_alive():
+        draw_map(stdscr, game_map, player)
+
+        key = stdscr.getch()
+
+        if key == ord("q"):
+            break
+
+        elif key == curses.KEY_UP:
+            player.move(0, -1, game_map)
+        elif key == curses.KEY_DOWN:
+            player.move(0, 1, game_map)
+        elif key == curses.KEY_LEFT:
+            player.move(-1, 0, game_map)
+        elif key == curses.KEY_RIGHT:
+            player.move(1, 0, game_map)
+
+        if random.random() < 0.05:
+            enemy = random_enemy()
+
+            result = battle(stdscr, player, enemy)
+            if result == "win":
+                stdscr.clear()
+                stdscr.addstr(10, 2, f"{enemy.name} defeated!")
+                stdscr.refresh()
+                stdscr.getch()
+            elif result == "lose":
+                stdscr.clear()
+                stdscr.addstr(10, 2, "KoPoon was defeated...")
+                stdscr.refresh()
+                stdscr.getch()
+            elif result == "run":
+                stdscr.clear()
+                stdscr.addstr(10, 2, "You escaped!")
+                stdscr.refresh()
+                stdscr.getch()
+            elif result == "quit":
+                break
+
+
+curses.wrapper(main)
