@@ -46,8 +46,8 @@ def main(stdscr):
 
         if random.random() < 0.05:
             enemy = random_enemy()
-            curses.endwin()
-            battle(player, enemy)
+
+            battle(stdscr, player, enemy)
 
 
 curses.wrapper(main)
