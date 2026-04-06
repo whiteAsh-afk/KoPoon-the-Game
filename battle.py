@@ -11,16 +11,10 @@ def battle(stdscr, player, enemy):
 
     while True:
         if not player.is_alive():
-            stdscr.addstr(5, 5, "KoPoon was defeated...")
-            stdscr.refresh()
-            stdscr.getch()
-            break
+            return "lose"
 
         if not enemy.is_alive():
-            stdscr.addstr(5, 5, f"{enemy.name} defeated")
-            stdscr.refresh()
-            stdscr.getch()
-            break
+            return "win"
 
         stdscr.clear()
 
@@ -39,8 +33,9 @@ def battle(stdscr, player, enemy):
         stdscr.refresh()
 
         key = stdscr.getch()
-
-        if key == curses.KEY_UP:
+        if key == ord("q") or key == ord("Q"):
+            return "quit"
+        elif key == curses.KEY_UP:
             selected = (selected - 1) % len(menu)
         elif key == curses.KEY_DOWN:
             selected = (selected + 1) % len(menu)
@@ -75,10 +70,8 @@ def battle(stdscr, player, enemy):
             # choose run
             elif selected == 1:
                 if random.random() < 0.5:
-                    stdscr.addstr(10, 2, "You escaped!")
-                    stdscr.refresh()
-                    stdscr.getch()
-                    break
+                    return "run"
+
                 else:
                     stdscr.addstr(10, 2, "Couldn't escape!")
                     stdscr.refresh()

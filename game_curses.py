@@ -27,7 +27,7 @@ def main(stdscr):
     curses.curs_set(0)
     stdscr.keypad(True)
 
-    while True:
+    while player.is_alive():
         draw_map(stdscr, game_map, player)
 
         key = stdscr.getch()
@@ -47,7 +47,24 @@ def main(stdscr):
         if random.random() < 0.05:
             enemy = random_enemy()
 
-            battle(stdscr, player, enemy)
+            result = battle(stdscr, player, enemy)
+            if result == "win":
+                stdscr.clear()
+                stdscr.addstr(10, 2, f"{enemy.name} defeated!")
+                stdscr.refresh()
+                stdscr.getch()
+            elif result == "lose":
+                stdscr.clear()
+                stdscr.addstr(10, 2, "KoPoon was defeated...")
+                stdscr.refresh()
+                stdscr.getch()
+            elif result == "run":
+                stdscr.clear()
+                stdscr.addstr(10, 2, "You escaped!")
+                stdscr.refresh()
+                stdscr.getch()
+            elif result == "quit":
+                break
 
 
 curses.wrapper(main)
