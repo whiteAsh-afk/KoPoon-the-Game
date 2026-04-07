@@ -5,6 +5,7 @@ from enemy import random_enemy
 from player import Player
 from map import generate_map
 from battle import battle
+from hud import draw_hud
 
 player = Player()
 game_map = generate_map(10, 10)
@@ -28,6 +29,7 @@ def main(stdscr):
     stdscr.keypad(True)
 
     while player.is_alive():
+        draw_hud(stdscr)
         draw_map(stdscr, game_map, player)
 
         key = stdscr.getch()

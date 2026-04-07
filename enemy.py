@@ -21,9 +21,10 @@ class Enemy:
 
 
 enemy_list = [
+    # name, hp, attack, exp
     ("Slime", 20, 5, 5),
     ("Goblin", 35, 10, 10),
-    ("Wolf", 50, 15, 20),
+    ("Alarm Clock", 50, 15, 20),
 ]
 
 
