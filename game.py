@@ -5,23 +5,10 @@ from enemy import random_enemy
 from player import Player
 from map import generate_map
 from battle import battle
-from hud import draw_hud
+from render import render_all
 
 player = Player()
-game_map = generate_map(10, 10)
-
-
-def draw_map(stdscr, game_map, player):
-    stdscr.clear()
-
-    for y, row in enumerate(game_map):
-        for x, tile in enumerate(row):
-            if x == player.x and y == player.y:
-                stdscr.addstr(y, x * 3, "[P]")
-            else:
-                stdscr.addstr(y, x * 3, f"[{tile}]")
-
-    stdscr.refresh()
+game_map = generate_map(30, 30)
 
 
 def main(stdscr):
@@ -29,8 +16,7 @@ def main(stdscr):
     stdscr.keypad(True)
 
     while player.is_alive():
-        draw_hud(stdscr)
-        draw_map(stdscr, game_map, player)
+        render_all(stdscr, game_map, player)
 
         key = stdscr.getch()
 

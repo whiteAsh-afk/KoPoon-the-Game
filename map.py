@@ -1,6 +1,3 @@
-from helpers import clear
-
-
 # map_generator
 def generate_map(row, column):
     map = []
@@ -13,15 +10,3 @@ def generate_map(row, column):
                 tiles.append(".")
         map.append(tiles)
     return map
-
-
-# print the map
-def draw_map(map, player):
-    clear()
-    for y, row in enumerate(map):
-        for x, tile in enumerate(row):
-            if x == player.x and y == player.y:
-                print("[P]", end="")
-            else:
-                print(f"[{tile}]", end="")
-        print("")

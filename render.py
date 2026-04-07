@@ -53,3 +53,20 @@ def draw_hud(stdscr):
 
     stdscr.addch(bottom, sep1, curses.ACS_BTEE)
     stdscr.addch(bottom, sep2, curses.ACS_BTEE)
+
+
+def draw_map(stdscr, game_map, player):
+    for y, row in enumerate(game_map):
+        for x, tile in enumerate(row):
+            render_x = (x * 3) + MARGIN_X + 1
+            render_y = y + MARGIN_Y
+
+            char = "[@]" if (x == player.x and y == player.y) else f"[{tile}]"
+            stdscr.addstr(render_y, render_x, char)
+
+
+def render_all(stdscr, game_map, player):
+    stdscr.clear()
+    draw_hud(stdscr)
+    draw_map(stdscr, game_map, player)
+    stdscr.refresh()
