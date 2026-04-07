@@ -83,3 +83,6 @@ def battle(stdscr, player, enemy):
                     stdscr.addstr(11, 2, f"{enemy.name} hits you for {damage} damage!")
                     stdscr.refresh()
                     stdscr.getch()
+
+
+# def battle(player, enemy):

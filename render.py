@@ -22,8 +22,8 @@ def draw_hud(stdscr):
     inner_height = bottom - top
 
     # seperators positions
-    sep1 = left + inner_width // 3
-    sep2 = left + (inner_width // 3) * 2
+    sep1 = left + inner_width // 2
+    sep2 = left + (inner_width // 4) * 3
 
     # horizontal lines
     stdscr.hline(top - 1, left, curses.ACS_HLINE, inner_width)
