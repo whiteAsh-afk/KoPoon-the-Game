@@ -6,6 +6,7 @@ from player import Player
 from map import generate_map
 from battle import battle
 from render import render_all
+from title import draw_title_screen
 
 player = Player()
 game_map = generate_map(30, 30)
@@ -14,6 +15,8 @@ game_map = generate_map(30, 30)
 def main(stdscr):
     curses.curs_set(0)
     stdscr.keypad(True)
+
+    state = "title"
 
     while player.is_alive():
         render_all(stdscr, game_map, player)
