@@ -16,7 +16,8 @@ def main(stdscr):
     curses.curs_set(0)
     stdscr.keypad(True)
 
-    state = "title"
+    draw_title_screen(stdscr)
+    stdscr.getch()
 
     while player.is_alive():
         render_all(stdscr, game_map, player)
