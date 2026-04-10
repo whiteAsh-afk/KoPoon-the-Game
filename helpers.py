@@ -37,8 +37,7 @@ def print_text(stdscr, y, x, width, text, highlight=False):
         stdscr.addstr(y, text_x, text)
 
 
-def menu_box(stdscr, y, x, w, options):
-    selected = 0
+def menu_box(stdscr, y, x, w, options, selected=0):
     h = (len(options) * 2) + 2
 
     box_y, box_x, box_h, box_w = _draw_box(stdscr, y, x, h, w)
