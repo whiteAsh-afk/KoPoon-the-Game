@@ -56,6 +56,7 @@ def draw_hud(stdscr):
 
 
 def draw_map(stdscr, game_map, player):
+    stdscr.clear()
     for y, row in enumerate(game_map):
         for x, tile in enumerate(row):
             render_x = (x * 3) + MARGIN_X + 1
@@ -63,6 +64,7 @@ def draw_map(stdscr, game_map, player):
 
             char = "[@]" if (x == player.x and y == player.y) else f"[{tile}]"
             stdscr.addstr(render_y, render_x, char)
+    stdscr.refresh()
 
 
 def render_all(stdscr, game_map, player):

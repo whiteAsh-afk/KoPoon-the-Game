@@ -7,6 +7,7 @@ from map import generate_map
 from battle import battle
 from render import draw_map
 from title import draw_title_screen
+from control import explore_input
 
 player = Player()
 game_map = generate_map(30, 30)
@@ -17,28 +18,20 @@ def main(stdscr):
     stdscr.keypad(True)
 
     draw_title_screen(stdscr)
-    stdscr.getch()
+    # stdscr.getch()
 
-    while player.is_alive():
-        # render_all(stdscr, game_map, player)
-        stdscr.clear()
+    while True:
         draw_map(stdscr, game_map, player)
-
         key = stdscr.getch()
-
-        moved = False
 
         if key == ord("q"):
             break
+        # render_all(stdscr, game_map, player)
+        stdscr.clear()
 
-        elif key == curses.KEY_UP:
-            moved = player.move(0, -1, game_map)
-        elif key == curses.KEY_DOWN:
-            moved = player.move(0, 1, game_map)
-        elif key == curses.KEY_LEFT:
-            moved = player.move(-1, 0, game_map)
-        elif key == curses.KEY_RIGHT:
-            moved = player.move(1, 0, game_map)
+        moved = False
+
+        moved = explore_input(key, player, game_map)
 
         if moved:
             if random.random() < 0.05:
