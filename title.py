@@ -1,6 +1,5 @@
-import curses
 from wcwidth import wcswidth
-from helpers import draw_box
+from helpers import menu_box
 
 # TITLE = [
 #     "   ▄█   ▄█▄  ▄██████▄     ▄██████▄   ▄██████▄   ▄██████▄  ███▄▄▄▄   ",
@@ -51,15 +50,15 @@ def draw_title(stdscr, title):
         stdscr.addstr(y + i, x, "|" + line + "|")
 
 
-def center_text(stdscr, y, x, width, text, highlight=False):
-    padded_text = f" {text} "
-    text_x = x + (width // 2) - (len(padded_text) // 2)
-    if highlight:
-        stdscr.attron(curses.A_REVERSE)
-        stdscr.addstr(y, text_x, padded_text)
-        stdscr.attroff(curses.A_REVERSE)
-    else:
-        stdscr.addstr(y, text_x, padded_text)
+# def center_text(stdscr, y, x, width, text, highlight=False):
+#     padded_text = f" {text} "
+#     text_x = x + (width // 2) - (len(padded_text) // 2)
+#     if highlight:
+#         stdscr.attron(curses.A_REVERSE)
+#         stdscr.addstr(y, text_x, padded_text)
+#         stdscr.attroff(curses.A_REVERSE)
+#     else:
+#         stdscr.addstr(y, text_x, padded_text)
 
 
 def draw_title_screen(stdscr):
@@ -68,35 +67,8 @@ def draw_title_screen(stdscr):
     draw_title(stdscr, TITLE)
 
     box_width = 40
-    box_height = 4
 
     box_top = (height // 3) * 2
     box_left = width // 2 - box_width // 2
 
-    draw_box(stdscr, box_top, box_left, box_height, box_width)
-
-    center_text(stdscr, box_top + 2, box_left, box_width, "Press any key to start")
-    # center_text(stdscr, box_top + 2, box_left, box_width, "New Game", True)
-    # center_text(stdscr, box_top + 4, box_left, box_width, "Continue")
-    # center_text(stdscr, box_top + 6, box_left, box_width, "Settings")
-    # center_text(stdscr, box_top + 8, box_left, box_width, "Credits")
-
-
-# def title_screen(stdscr)
-
-# def main(stdscr):
-#     curses.curs_set(0)
-#
-#     while True:
-#         stdscr.clear()
-#
-#         draw_title_screen(stdscr)
-#         # draw_title(stdscr, TITLE)
-#         stdscr.refresh()
-#
-#         key = stdscr.getch()
-#         if key == ord("q"):
-#             break
-#
-#
-# curses.wrapper(main)
+    menu_box(stdscr, box_top, box_left, box_width, ["option1", "option2", "option3"])

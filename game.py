@@ -5,7 +5,7 @@ from enemy import random_enemy
 from player import Player
 from map import generate_map
 from battle import battle
-from render import render_all, draw_map
+from render import draw_map
 from title import draw_title_screen
 
 player = Player()
