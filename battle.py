@@ -31,7 +31,7 @@ class Battle:
             self.state = "lose"
 
     def run(self):
-        if random.random() < 0.5:
+        if random.random() < 0.4:
             self.state = "run"
         else:
             self.message = "Could'nt escape"
@@ -62,12 +62,12 @@ def battle(stdscr, player, enemy):
         # battle info
         message_box(
             stdscr,
-            1,
-            2,
+            20,
+            20,
             9,
             30,
             [
-                f"You encountered {enemy.name}!",
+                f"You encountered {battle.enemy.name}!",
                 f"KoPoon HP: {player.hp}",
                 f"Enemy Hp: {enemy.hp}",
             ],
@@ -77,7 +77,7 @@ def battle(stdscr, player, enemy):
         # stdscr.addstr(4, 2, f"Enemy Hp: {enemy.hp}")
 
         # draw menu
-        selected = menu_box(stdscr, 10, 10, 40, options, selected)
+        selected = menu_box(stdscr, 30, 20, 40, options, selected)
         choice = options[selected]
 
         # choose Attack
@@ -89,4 +89,7 @@ def battle(stdscr, player, enemy):
             battle.run()
 
         if battle.message:
-            message_box(stdscr, 10, 2, 5, 60, battle.message.split("\n"))
+            message_box(stdscr, 2, 10, 5, 60, battle.message.split("\n"))
+            stdscr.refresh()
+            stdscr.getch()
+            battle.message = ""
