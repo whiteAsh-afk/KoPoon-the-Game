@@ -9,7 +9,7 @@ class Player:
 
         self.max_hp = 100
         self.hp = self.max_hp
-        self.attack = 20
+        self.power = 20
 
     # handle the player movement
     def move(self, dx, dy, map):
@@ -36,7 +36,7 @@ class Player:
         self.exp_to_next = int(self.exp_to_next * 1.5)
 
         self.max_hp += 5
-        self.attack += 1
+        self.power += 1
 
     def take_damage(self, damage):
         self.hp -= damage

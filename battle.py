@@ -10,16 +10,47 @@ class Battle:
         self.state = "menu"
         self.message = ""
 
-    # def attack(self)
+    def player_attack(self):
+        damage = self.player.power
+        self.enemy.take_damage(damage)
+
+        self.message = f"KoPoon hit the {self.enemy.name} for {damage} damage!"
+
+        if not self.enemy.is_alive():
+            self.state = "win"
+            return
+        self.enemy_attack()
+
+    def enemy_attack(self):
+        damage = self.enemy.power
+        self.player.take_damage(damage)
+
+        self.message += f"\n{self.enemy.name} hit KoPoon for {damage} damage!"
+
+        if not self.player.is_alive():
+            self.state = "lose"
+
+    def run(self):
+        if random.random() < 0.5:
+            self.state = "run"
+        else:
+            self.message = "Could'nt escape"
+            self.enemy_attack()
 
 
 def battle(stdscr, player, enemy):
+    battle = Battle(player, enemy)
+
     curses.curs_set(0)
     stdscr.keypad(True)
 
     options = ["Attack", "Run"]
     selected = 0
+
     while True:
+        if battle.state in ["win", "lose", "run"]:
+            return battle.state
+
         if not player.is_alive():
             return "lose"
 
@@ -48,68 +79,14 @@ def battle(stdscr, player, enemy):
         # draw menu
         selected = menu_box(stdscr, 10, 10, 40, options, selected)
         choice = options[selected]
-        # for i, option in enumerate(menu):
-        #     if i == selected:
-        #         stdscr.addstr(7 + i, 4, f"> {option}")
-        #     else:
-        #         stdscr.addstr(7 + i, 4, f"  {option}")
 
-        # stdscr.refresh()
-        #
-        # key = stdscr.getch()
-        # if key == ord("q") or key == ord("Q"):
-        #     return "quit"
-        # elif key == curses.KEY_UP:
-        #     selected = (selected - 1) % len(menu)
-        # elif key == curses.KEY_DOWN:
-        #     selected = (selected + 1) % len(menu)
-        # # return/ enter
-        # elif key == 10:
         # choose Attack
         if choice == "Attack":
-            damage = player.attack
-            enemy.take_damage(damage)
-
-            message_box(
-                stdscr,
-                10,
-                2,
-                3,
-                70,
-                [f"KoPoon hit the {enemy.name} for {damage} damage!"],
-            )
-
-            # enemy defeated
-            if not enemy.is_alive():
-                stdscr.addstr(12, 2, f"{enemy.name} defeated!")
-                stdscr.refresh()
-                stdscr.getch()
-                break
-
-            # enemy attack
-            damage = enemy.attack
-            player.take_damage(damage)
-
-            stdscr.addstr(11, 2, f"{enemy.name} hit KoPoon for {damage} damage!")
-            stdscr.refresh()
-            stdscr.getch()
+            battle.player_attack()
 
         # choose run
         elif choice == "Run":
-            if random.random() < 0.5:
-                return "run"
+            battle.run()
 
-            else:
-                stdscr.addstr(10, 2, "Couldn't escape!")
-                stdscr.refresh()
-                stdscr.getch()
-
-                damage = enemy.attack
-                player.take_damage(damage)
-
-                stdscr.addstr(11, 2, f"{enemy.name} hits you for {damage} damage!")
-                stdscr.refresh()
-                stdscr.getch()
-
-
-# def battle(player, enemy):
+        if battle.message:
+            message_box(stdscr, 10, 2, 5, 60, battle.message.split("\n"))

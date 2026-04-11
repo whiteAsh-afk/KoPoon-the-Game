@@ -3,11 +3,11 @@ import random
 
 # Enemy class
 class Enemy:
-    def __init__(self, name, hp, attack, exp):
+    def __init__(self, name, hp, power, exp):
         self.name = name
         self.hp = hp
         self.max_hp = hp
-        self.attack = attack
+        self.power = power
         self.exp = exp
 
     def reset(self):
